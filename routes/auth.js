@@ -11,6 +11,8 @@ router.post("/signup/admin", authController.signupAdmin);
 
 router.post("/login/applicant", authController.loginApplicant);
 
+router.post("/login/recruiter", authController.loginRecruiter);
+
 router.post("/login/admin", authController.loginAdmin);
 
 module.exports = router;

@@ -11,7 +11,7 @@ const savedRoute = require("./saved");
 function route(app) {
   app.use("/auth", authRoute);
 
-  app.use("/jobs", jobRoute);
+  app.use("/jobs", verifyToken, isRecruiter, jobRoute);
 
   app.use("/recruiters", verifyToken, recruiterRoute);
 

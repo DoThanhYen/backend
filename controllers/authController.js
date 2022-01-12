@@ -6,6 +6,7 @@ const roles = require("../models/role");
 const applicants = require("../models/applicant");
 const recruiters = require("../models/recruiter");
 const admin = require("../models/admin");
+const jobs = require("../models/job");
 class authController {
   //[POST] auth/signup/applicant
   async signupApplicant(req, res) {
@@ -224,6 +225,16 @@ class authController {
         role: role_name,
         accessToken: token,
       });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
+    }
+  }
+
+  // [GET] /getalljobs
+  async GetAllJobs(req, res, next) {
+    try {
+      const Jobs = await jobs.findAll();
+      res.json(Jobs);
     } catch (error) {
       res.status(500).send({ message: error.message });
     }

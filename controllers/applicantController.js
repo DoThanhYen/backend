@@ -39,17 +39,48 @@ class ApplicantController {
 
   //[POST]  applicants/savedjob
   async Saved(req, res) {
-    try {
-      await Savedjobs.create({
-        applicant_id: req.id,
-        job_id: req.body.job_id,
-        is_deleted: false,
-      });
-      res.json({
-        message: "Thêm mới thành công !",
-      });
-    } catch (error) {
-      res.status(500).send({ message: error });
+    {
+      try {
+        const data = await Savedjobs.findOne({
+          where: {
+            applicant_id: req.id,
+            job_id: req.body.job_id,
+          },
+        });
+        if (data) {
+          if (data.is_deleted == 1) {
+            Savedjobs.update(
+              {
+                is_deleted: 0,
+              },
+              {
+                where: {
+                  applicant_id: req.id,
+                  job_id: req.body.job_id,
+                },
+              }
+            );
+            res.json({
+              message: "Bạn đã lưu khôi phục công việc này !",
+            });
+          } else {
+            res.json({
+              message: "Bạn đã lưu công việc này !",
+            });
+          }
+        } else {
+          await Savedjobs.create({
+            applicant_id: req.id,
+            job_id: req.body.job_id,
+            is_deleted: false,
+          });
+          res.json({
+            message: "Thêm mới thành công !",
+          });
+        }
+      } catch (error) {
+        res.status(500).send({ message: error });
+      }
     }
   }
 

@@ -5,6 +5,7 @@ const authRoute = require("./auth");
 const jobRoute = require("./job");
 const recruiterRoute = require("./recruiter");
 const applicantRoute = require("./applicant");
+const applicationRoute = require("./application");
 const savedRoute = require("./saved");
 
 function route(app) {
@@ -15,6 +16,8 @@ function route(app) {
   app.use("/recruiters", verifyToken, recruiterRoute);
 
   app.use("/applicants", verifyToken, applicantRoute);
+
+  app.use("/applications", verifyToken, applicationRoute);
 
   app.use("/saved", verifyToken, savedRoute);
   //app.use("/roles", verifyToken, isAdmin, roleRoute);

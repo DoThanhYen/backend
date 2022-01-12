@@ -1,0 +1,2 @@
+Lấy công việc đã Save theo id của người tìm việc
+SELECT  * FROM jobs JOIN saveds ON jobs.id = saveds.job_id WHERE saveds.applicant_id=123
